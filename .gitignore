@@ -1,4 +1,4 @@
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 
@@ -7,7 +7,7 @@
 
 # production
 /build
-/Firebase.js
+Firebase.js/
 # misc
 .DS_Store
 .env.local
