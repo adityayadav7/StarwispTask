@@ -14,24 +14,24 @@ class EditDetails extends Component {
             imgUrl:'',
             students:'',
             email:'',
-            contactNo:''
+            contactNo:'',
+            weburl:''
 
         }
     }
     componentDidMount(){
-        axios.get('http://localhost:5000/kisanfeedback-b2c73/us-central1/api/v1/data/'+this.props.match.params.id)
+        axios.get('http://localhost:5000/api/v1/data/'+this.props.match.params.id)
         .then(res=>{
-           let resData=res.data
+           let resData=res.data[0]
             this.setState({
-                Uid:resData.uid,
                 uniname:resData.Uniname,
                 regDate:resData.regDate,
                 expDate:resData.ExpiryDate,
-                weburl:'',
                 imgUrl:resData.imgurl,
                 students:resData.students,
                 email:resData.email,
-                contactNo:resData.ContactNo 
+                contactNo:resData.ContactNo ,
+                weburl:resData.weburl
             })
         })
     }
@@ -41,16 +41,16 @@ class EditDetails extends Component {
     onSubmit(e){
           e.preventDefault()
          const details={
-             "uid":this.state.Uid,
              "Uniname":this.state.uniname,
              "email":this.state.email,
              "regDate":this.state.regDate,
              "ExpiryDate":this.state.expDate,
              "imgurl":this.state.imgUrl,
              "students":this.state.students,
-             "ContactNo":this.state.contactNo
+             "ContactNo":this.state.contactNo,
+             "weburl":this.state.weburl
          }
-         axios.put('http://localhost:5000/kisanfeedback-b2c73/us-central1/api//update/univerity/data/'+this.props.match.params.id,details)
+         axios.put('http://localhost:5000/api/update/univerity/data/'+this.props.match.params.id,details)
          .then(res=>{
              console.log('update');
              this.props.history.push('/view')
@@ -69,19 +69,9 @@ class EditDetails extends Component {
                         <form >
 
                             <div>
+        <div>Edit Details uid: {this.props.match.params.id}</div>
                                 <div className='same-line'>
-                                    <div className="form-group1">
-                                        <input
-                                            className="input1"
-                                            id="Uid"
-                                            type="number"
-                                            value={this.state.Uid}
-                                            onChange={e=>this.onChange(e)}
-                                           
-                                            
-                                            required />
-                                        <label >Uid</label>
-                                    </div>
+                                
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -92,8 +82,6 @@ class EditDetails extends Component {
                                             required />
                                         <label>University Name</label>
                                     </div>
-                                </div>
-                                <div className='same-line'>
                                     <div className="form-group1">
                                         <input
                                             className="input1"
@@ -103,8 +91,11 @@ class EditDetails extends Component {
                                             onChange={this.onChange}
                                             
                                             required />
-                                        <label htmlFor="name">Registration Date</label>
+                                        <label >Registration Date</label>
                                     </div>
+                                </div>
+                                <div className='same-line'>
+                                    
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -115,8 +106,6 @@ class EditDetails extends Component {
                                             required />
                                         <label >Expiry date</label>
                                     </div>
-                                </div>
-                                <div className='same-line'>
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -127,6 +116,9 @@ class EditDetails extends Component {
                                             required />
                                         <label >Image Url</label>
                                     </div>
+                                </div>
+                                <div className='same-line'>
+                                    
                                     <div className="form-group1">
                                         <input
                                             className="input1"
@@ -137,8 +129,6 @@ class EditDetails extends Component {
                                             required />
                                         <label >No.of Student</label>
                                     </div>
-                                </div>
-                                <div className='same-line'>
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -149,6 +139,9 @@ class EditDetails extends Component {
                                             required />
                                         <label >Email</label>
                                     </div>
+                                </div>
+                                <div className='same-line'>
+                                    
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -159,7 +152,19 @@ class EditDetails extends Component {
                                             required />
                                         <label >Contact No.</label>
                                     </div>
+                                    <div className="form-group1 ">
+                                            <input
+                                                className="input1"
+                                                id="weburl"
+                                                type="url"
+                                                value={this.state.weburl}
+                                                onChange={this.onChange}
+                                                required />
+                                            <label >Web Url</label>
+                                        </div>
+
                                 </div>
+                                
                             </div>
                             <div className='btn-submit'>
                                 <button type='submit'onClick={this.onSubmit.bind(this)} > Submit</button>

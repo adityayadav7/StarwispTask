@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import { BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 import {browserHistory} from "react-router";
 import Login from './components/Login';
@@ -8,7 +7,7 @@ import AddDetails from './components/AddDetails';
 import View from './components/View';
 import EditDetails from './components/EditDetails'
 import './App.css';
-import axios from 'axios';
+
 class App extends Component {
   constructor(props) {
     super(props)

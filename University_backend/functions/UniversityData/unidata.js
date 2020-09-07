@@ -12,7 +12,8 @@ exports.UniversityData = (req, res) => {
             "ExpiryDate":req.body.expirydate,
             "imgurl":req.body.imageUrl,
             "students":req.body.Students,
-            "ContactNo":req.body.contact
+            "ContactNo":req.body.contact,
+            "weburl":req.body.weburl
           }
           database.collection('universityDetails').add(Details).then(ref => {
            
@@ -68,7 +69,8 @@ exports.UpdateUniversityDetails= (req,res)=>{
         ExpiryDate:req.body.ExpiryDate,
         imgurl:req.body.imgurl,
         students:req.body.students,
-        ContactNo:req.body.ContactNo
+        ContactNo:req.body.ContactNo,
+        weburl:req.body.weburl
     }
     database.collection('universityDetails').doc(`${req.params.item_id}`).update(details)
     .then(r=>{

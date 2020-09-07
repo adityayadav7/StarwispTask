@@ -11,7 +11,7 @@ class Dashboard extends Component {
     super(props)
 
     this.state = {
-
+        add:false
     }
   }
   logout(e) {
@@ -26,6 +26,16 @@ class Dashboard extends Component {
       this.props.history.push(`/`)
     });
   }
+  onAdd(e){
+    this.setState({
+      add:true
+    })
+  }
+  onCancel(){
+    this.setState({
+        add:false
+    })
+}
 
   render() {
     return (
@@ -37,7 +47,7 @@ class Dashboard extends Component {
               <span className="_h131" data-reactid=".0.0.1.0.0"></span>
               <div className="_q12" data-reactid=".0.0.1.1.0">
 
-                <Link to='/add' className="_q131" data-reactid=".0.0.1.1.0.0">Add</Link>
+                <a onClick={this.onAdd.bind(this)}  className="_q131" data-reactid=".0.0.1.1.0.0">Add</a>
 
               </div>
               <div className="_q12 padd-left" data-reactid=".0.0.1.1.0">
@@ -63,10 +73,15 @@ class Dashboard extends Component {
 
           </div>
         </header>
-        <div className='mg'>
+        {
+          this.state.add?
+          <div className='mg'  >
          
-            <AddDetails {...this.props}/>
+            <AddDetails {...this.props} onClick={this.onCancel}/>
         </div>
+        :
+        null
+        }
       </div>
     )
   }

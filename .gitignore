@@ -1,14 +1,15 @@
-node_modules/
-/.pnp
+University_backend/functions/node_modules
 .pnp.js
-
+uni_backend/node_modules
 # testing
 /coverage
 
 # production
 /build
-Firebase.js/
-# misc
+uni_frontend/src/Firebase.js
+
+uni_backend/route.js
+University_backend/
 .DS_Store
 .env.local
 .env.development.local

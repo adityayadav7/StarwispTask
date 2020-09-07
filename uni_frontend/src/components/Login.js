@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import '../style/style.css';
-
-import fire from '../Firebase';
+import axios from "axios";
 // import { browserHistory} from "react-router";
 import Loader from './Loader';
 import toast from 'toasted-notes';
@@ -12,11 +11,9 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.login = this.login.bind(this);
-    this.prev = this.prev.bind(this);
-    this.next = this.next.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
+    
     this.state = {
-      email: '',
+      userid: '',
       password: '',
       error: '',
       step: true,
@@ -24,98 +21,53 @@ class Login extends Component {
 
     }
   }
-  componentDidMount() {
-
-    // [START signout]
-    fire.auth().signOut();
-    // [END signout]
-
-  }
+  onChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
+};
+ 
 
 
   login(e) {
-    if (fire.auth().currentUser) {
-
-      fire.auth().signOut();
-
-    }
-    this.setState({ load: true });
-    const email = document.querySelector('#email').value;
-    const password = document.querySelector('#password').value;
-
-    fire.auth().signInWithEmailAndPassword(email.trim(), password)
-      .then(res => {
-        toast.notify("Logged In", {
+   let user={
+     user_id:this.state.userid,
+     password:this.state.password
+   }
+    axios.post('http://localhost:5000/api/login',user)
+    .then(res=>{
+      if(res.data===null){
+        toast.notify("Incorrect user_id and password", {
           duration: 2000
         })
-        console.log('Successfully Logged In');
-        this.props.history.push('/dashboard');
-        localStorage.setItem('userId', email)
-        this.setState({ load: false });
-      })
-      .catch((err) => {
-        this.setState({ load: false });
-        if (err.code === "auth/wrong-password") {
+        this.props.history.push('/');
+      }else{
+        localStorage.setItem('userId',user.user_id)
+      //console.log(JSON.stringify(res.data));
+      this.props.history.push('/dashboard');
+      toast.notify("Logged In", {
+              duration: 2000
+            })
+          }
+    })
+    .catch((err) => {
+          this.setState({ load: false });
+          
+          toast.notify(err)
+          console.log('Error: ' + err.toString());
+        })
 
-          this.setState({ error: "incorrect password" });
-
-        }
-        // this.state.error=err;
-        toast.notify("Incorrect Password")
-        console.log('Error: ' + err.toString());
-      })
   }
 
 
 
-  onChangeEmail(e) {
-    this.setState({ email: e.target.value });
-  }
 
-
-  prev() {
-    this.setState({ step: true });
-  }
-  next() {
-    this.setState({ step: false });
-  }
-  sess() {
-    this.setState({ load: !false });
-    setTimeout(() => {
-      this.setState({ load: !true });
-    }, 5000);
-  }
+ 
   onhandle() {
     this.login();
-    //this.sess()
   }
-
-
 
 
   render() {
-    //   const [email,setEmail]=useState('');
-    //   const [password,setPassword]=useState('');
-    //   const [showLoading, setShowLoading] = useState(false);
-    // const login=async()=>{
-    //   setShowLoading(true);
-    //   try{
-    //     const doLogin= await fire.auth().signInWithEmailAndPassword(email,password);
-    //     setShowLoading(false);
-    //     if(doLogin.user){
-    //       this.onNavigate("/home")
-    //     }
-    //   } catch(e){
-    //     setShowLoading(false);
-    //     Alert.alert(
-    //       e.message
-    //     );
-    //   }
-
-    // };
-    // if(this.state.loggedIn){
-    //   return <Redirect to="/desktop/"/>
-    // }
+   
 
     return (
       <div className="base-container" ref={this.props.containerRef}>
@@ -127,14 +79,27 @@ class Login extends Component {
                 <div className="in_pswd">{this.state.error}</div>
                 <div className="form-group" >
                   <label >Email address</label>
-                  <input id="email" type="text" name="email" placeholder="Enter email" />
-                  <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                  <input 
+                    id="userid" 
+                    type="text" 
+                    name="email" 
+                    value={this.state.userid}  
+                    onChange={this.onChange.bind(this)}
+                    placeholder="Enter email"
+                    />
                 </div>
                 <div className="form-group">
                   <label >Password</label>
-                  <input type="password" id="password" name="password" placeholder="Password" />
+                  <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    value={this.state.password}
+                    onChange={this.onChange.bind(this)} 
+                    placeholder="Password" 
+                    />
                 </div>
-                <div className='footer'>
+                <div className='footer12'>
                   <button type="submit" onClick={this.onhandle.bind(this)} className="btn1">Login</button>
                 </div>
               </div>
@@ -147,7 +112,5 @@ class Login extends Component {
     );
   }
 }
-// const clickOutsideConfig = {
-//   handleClickOutside: () => Login.handleClickOutside,
-// };
+
 export default Login;
