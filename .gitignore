@@ -2,6 +2,7 @@ University_backend/functions/node_modules
 
 .pnp.js
 uni_backend/node_modules
+uni_frontend/node_modules
 # testing
 /coverage
 
@@ -10,7 +11,7 @@ uni_backend/node_modules
 uni_frontend/src/Firebase.js
 
 uni_backend/route.js
-University_backend/
+
 .DS_Store
 .env.local
 .env.development.local
