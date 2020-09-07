@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import '../style/style.css';
 import axios from "axios";
-// import { browserHistory} from "react-router";
 import Loader from './Loader';
 import toast from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
@@ -78,7 +77,7 @@ class Login extends Component {
                 <div className="header">Login</div>
                 <div className="in_pswd">{this.state.error}</div>
                 <div className="form-group" >
-                  <label >Email address</label>
+                  <label >User ID</label>
                   <input 
                     id="userid" 
                     type="text" 

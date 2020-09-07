@@ -3,7 +3,6 @@ import '../style/style.css';
 import { Link } from 'react-router-dom';
 import toast from 'toasted-notes';
 import 'toasted-notes/src/styles.css';
-import firebase from '../Firebase';
 import AddDetails from './AddDetails';
 
 class Dashboard extends Component {
@@ -16,7 +15,7 @@ class Dashboard extends Component {
   }
   logout(e) {
     e.preventDefault();
-    firebase.auth().signOut().then(res => {
+   
       toast.notify("Logout user", {
         position: "bottom",
         duration: 2000
@@ -24,7 +23,7 @@ class Dashboard extends Component {
       console.log("signout yay!");
       localStorage.clear();
       this.props.history.push(`/`)
-    });
+   
   }
   onAdd(e){
     this.setState({

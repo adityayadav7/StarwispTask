@@ -538,3 +538,6 @@ html, #root, .App {
     color: #0e141e;
     color: var(--color-text-dark);
   }
+  .mg-top{
+      margin-top: 100px;
+  }

@@ -6,72 +6,73 @@ class EditDetails extends Component {
         super(props)
 
         this.state = {
-            Uid:'',
-            uniname:'',
-            regDate:'',
-            expDate:'',
-            weburl:'',
-            imgUrl:'',
-            students:'',
-            email:'',
-            contactNo:'',
-            weburl:''
+            Uid: '',
+            uniname: '',
+            regDate: '',
+            expDate: '',
+            weburl: '',
+            imgUrl: '',
+            students: '',
+            email: '',
+            contactNo: '',
+            weburl: ''
 
         }
     }
-    componentDidMount(){
-        axios.get('http://localhost:5000/api/v1/data/'+this.props.match.params.id)
-        .then(res=>{
-           let resData=res.data[0]
-            this.setState({
-                uniname:resData.Uniname,
-                regDate:resData.regDate,
-                expDate:resData.ExpiryDate,
-                imgUrl:resData.imgurl,
-                students:resData.students,
-                email:resData.email,
-                contactNo:resData.ContactNo ,
-                weburl:resData.weburl
+    componentDidMount() {
+        axios.get('http://localhost:5000/api/v1/data/' + this.props.match.params.id)
+            .then(res => {
+                let resData = res.data[0]
+                this.setState({
+                    uniname: resData.Uniname,
+                    regDate: resData.regDate,
+                    expDate: resData.ExpiryDate,
+                    imgUrl: resData.imgurl,
+                    students: resData.students,
+                    email: resData.email,
+                    contactNo: resData.ContactNo,
+                    weburl: resData.weburl
+                })
             })
-        })
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
-    onSubmit(e){
-          e.preventDefault()
-         const details={
-             "Uniname":this.state.uniname,
-             "email":this.state.email,
-             "regDate":this.state.regDate,
-             "ExpiryDate":this.state.expDate,
-             "imgurl":this.state.imgUrl,
-             "students":this.state.students,
-             "ContactNo":this.state.contactNo,
-             "weburl":this.state.weburl
-         }
-         axios.put('http://localhost:5000/api/update/univerity/data/'+this.props.match.params.id,details)
-         .then(res=>{
-             console.log('update');
-             this.props.history.push('/view')
-         })
-         .catch(err=>{
-             console.log(err)
-         })
+    onSubmit(e) {
+        e.preventDefault()
+        const details = {
+            "Uniname": this.state.uniname,
+            "email": this.state.email,
+            "regDate": this.state.regDate,
+            "ExpiryDate": this.state.expDate,
+            "imgurl": this.state.imgUrl,
+            "students": this.state.students,
+            "ContactNo": this.state.contactNo,
+            "weburl": this.state.weburl
+        }
+        axios.put('http://localhost:5000/api/update/univerity/data/' + this.props.match.params.id, details)
+            .then(res => {
+                console.log('update');
+                this.props.history.push('/view')
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     render() {
         return (
             <div>
                 <div className='fr'>
-                    <div className="form">
+                <div className='shadow mg-top'>
+                    <div className="form1">
 
                         <form >
 
                             <div>
-        <div>Edit Details uid: {this.props.match.params.id}</div>
+                                <div>Edit Details uid: {this.props.match.params.id}</div>
                                 <div className='same-line'>
-                                
+
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -89,13 +90,13 @@ class EditDetails extends Component {
                                             type="date"
                                             value={this.state.regDate}
                                             onChange={this.onChange}
-                                            
+
                                             required />
                                         <label >Registration Date</label>
                                     </div>
                                 </div>
                                 <div className='same-line'>
-                                    
+
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -118,7 +119,7 @@ class EditDetails extends Component {
                                     </div>
                                 </div>
                                 <div className='same-line'>
-                                    
+
                                     <div className="form-group1">
                                         <input
                                             className="input1"
@@ -141,7 +142,7 @@ class EditDetails extends Component {
                                     </div>
                                 </div>
                                 <div className='same-line'>
-                                    
+
                                     <div className="form-group1 ">
                                         <input
                                             className="input1"
@@ -153,25 +154,25 @@ class EditDetails extends Component {
                                         <label >Contact No.</label>
                                     </div>
                                     <div className="form-group1 ">
-                                            <input
-                                                className="input1"
-                                                id="weburl"
-                                                type="url"
-                                                value={this.state.weburl}
-                                                onChange={this.onChange}
-                                                required />
-                                            <label >Web Url</label>
-                                        </div>
+                                        <input
+                                            className="input1"
+                                            id="weburl"
+                                            type="url"
+                                            value={this.state.weburl}
+                                            onChange={this.onChange}
+                                            required />
+                                        <label >Web Url</label>
+                                    </div>
 
                                 </div>
-                                
+
                             </div>
                             <div className='btn-submit'>
-                                <button type='submit'onClick={this.onSubmit.bind(this)} > Submit</button>
+                                <button type='submit' onClick={this.onSubmit.bind(this)} > Submit</button>
                             </div>
                         </form>
                     </div>
-
+                  </div>
                 </div>
             </div>
         )
